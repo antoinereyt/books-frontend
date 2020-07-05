@@ -1,0 +1,15 @@
+name: Cleanup Review App Resources
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-review-app:
+    runs-on: ubuntu-latest
+    name: Delete Review App
+    steps:
+      - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
