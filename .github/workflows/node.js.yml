@@ -32,9 +32,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: pratapaditya1997/commentator@master
+      - uses: JoseThen/comment-pr@v1
         with:
-          comment: 'hello world'
+          comment: 'This PR is the bees knees!'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: rlespinasse/github-slug-action@master
       - name: Print slug variables
         run: |
