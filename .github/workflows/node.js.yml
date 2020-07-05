@@ -32,6 +32,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@master
+        with:
+          message: 'Example of message !'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: rlespinasse/github-slug-action@master
       - name: Print slug variables
         run: |
