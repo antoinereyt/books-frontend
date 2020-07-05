@@ -24,23 +24,6 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
 
-    - shell: bash
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        ORGANIZATION: "antoiner"
-        IMAGE: "books-frontend"
-        TAG: "feature-fake-v2-0-11"
-      run : |
-        sudo apt-get install jq
-        LOGIN_DATA="{ \"username\": \"${DOCKER_USERNAME}\", \"password\": \"${DOCKER_PASSWORD}\" }"
-        TOKEN=`curl -s -H "Content-Type: application/json" -X POST -d "${LOGIN_DATA}" "https://hub.docker.com/v2/users/login/" | jq -r .token`
-        echo $TOKEN
-
-        curl -v "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${IMAGE}/tags/${TAG}/" \
-        -X DELETE \
-        -H "Authorization: JWT ${TOKEN}"
-
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -55,11 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: rlespinasse/github-slug-action@master
-      - name: Print slug variables
-        run: |
-          echo ${{ env.GITHUB_REF_SLUG }}
-          echo ${{ env.GITHUB_HEAD_REF_SLUG }}
-          echo ${{ env.GITHUB_BASE_REF_SLUG }}
       - uses: actions/checkout@v2
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
