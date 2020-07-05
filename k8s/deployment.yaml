@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: books-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: books-frontend
+  template:
+    metadata:
+      labels:
+        app: books-frontend
+    spec:
+      containers:
+      - name: books-frontend
+        image: antoiner/books-frontend:latest
+        ports:
+        - containerPort: 3000
