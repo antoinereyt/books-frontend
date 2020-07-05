@@ -62,4 +62,5 @@ jobs:
         with:
           message: 'Delete ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event.pull_request.merged
+        if: github.event_name == 'pull_request' && github.event.action == 'closed'
+
