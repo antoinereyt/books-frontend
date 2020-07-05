@@ -35,7 +35,7 @@ jobs:
       - uses: github-actions-up-and-running/pr-comment@v1.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          message: Nice PR!👍
+          message: Nice PR
       - uses: rlespinasse/github-slug-action@master
       - name: Print slug variables
         run: |
