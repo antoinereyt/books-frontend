@@ -49,6 +49,7 @@ jobs:
 
   deploy:
     needs: publish_docker
+    runs-on: ubuntu-latest
     steps:
       - name: Comment deploy branch url
         uses: thollander/actions-comment-pull-request@master
