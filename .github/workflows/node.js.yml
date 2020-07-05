@@ -57,6 +57,10 @@ jobs:
           message: 'A preview of this branch will be deployed here http://books.${{ env.GITHUB_HEAD_REF_SLUG }}.areyt.net'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event.pull_request.opened
+      - name: Print slug variables
+        run: |
+          echo ${{ github.event_name }}
+          echo ${{ github.event.action }}
       - name: Comment delete k8s things
         uses: thollander/actions-comment-pull-request@master
         with:
