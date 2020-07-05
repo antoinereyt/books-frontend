@@ -1,0 +1,20 @@
+name: Create Review App Resources
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  delete-review-app:
+    runs-on: ubuntu-latest
+    name: Create Review App
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Comment
+      uses: thollander/actions-comment-pull-request@master
+      with:
+        message: 'Create ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
