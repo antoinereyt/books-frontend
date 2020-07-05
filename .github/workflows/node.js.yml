@@ -37,7 +37,7 @@ jobs:
         TOKEN=`curl -s -H "Content-Type: application/json" -X POST -d "${LOGIN_DATA}" "https://hub.docker.com/v2/users/login/" | jq -r .token`
         echo $TOKEN
 
-        curl "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${IMAGE}/tags/${TAG}/" \
+        curl -v "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${IMAGE}/tags/${TAG}/" \
         -X DELETE \
         -H "Authorization: JWT ${TOKEN}"
 
