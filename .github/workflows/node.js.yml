@@ -28,10 +28,16 @@ jobs:
     - run: yarn
     - run: yarn test
   
-  build_and_publish_docker_image:
+  publish_docker:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: rlespinasse/github-slug-action@master
+      - name: Print slug variables
+        run: |
+          echo ${{ env.GITHUB_REF_SLUG }}
+          echo ${{ env.GITHUB_HEAD_REF_SLUG }}
+          echo ${{ env.GITHUB_BASE_REF_SLUG }}
       - uses: actions/checkout@v2
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
@@ -39,4 +45,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: antoiner/books-frontend
-          tag_with_ref: true
+          tags: ${{ env.GITHUB_HEAD_REF_SLUG }}
+
+  deploy:
+    needs: publish_docker
+    steps:
+      - name: Comment deploy branch url
+        uses: thollander/actions-comment-pull-request@master
+        with:
+          message: 'A preview of this branch will be deployed here http://books.${{ env.GITHUB_HEAD_REF_SLUG }}.areyt.net'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event.pull_request.opened
+      - name: Comment delete k8s things
+        uses: thollander/actions-comment-pull-request@master
+        with:
+          message: 'Delete ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event.pull_request.merged
