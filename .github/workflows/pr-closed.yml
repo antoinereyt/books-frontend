@@ -1,0 +1,37 @@
+name: Cleanup Review App Resources
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-review-app:
+    runs-on: ubuntu-latest
+    name: Delete Review App
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Comment
+      uses: thollander/actions-comment-pull-request@master
+      with:
+        message: 'Delete ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # Delete Docker tag
+    - uses: rlespinasse/github-slug-action@master
+    - shell: bash
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        ORGANIZATION: ${{ secrets.DOCKER_USERNAME }}
+        IMAGE: "books-frontend"
+        TAG: ${{ env.GITHUB_HEAD_REF_SLUG }}
+      run : |
+        sudo apt-get install jq
+        LOGIN_DATA="{ \"username\": \"${DOCKER_USERNAME}\", \"password\": \"${DOCKER_PASSWORD}\" }"
+        TOKEN=`curl -s -H "Content-Type: application/json" -X POST -d "${LOGIN_DATA}" "https://hub.docker.com/v2/users/login/" | jq -r .token`
+
+        curl "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${IMAGE}/tags/${TAG}/" \
+        -X DELETE \
+        -H "Authorization: JWT ${TOKEN}"

@@ -23,6 +23,7 @@ jobs:
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
+
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -37,11 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: rlespinasse/github-slug-action@master
-      - name: Print slug variables
-        run: |
-          echo ${{ env.GITHUB_REF_SLUG }}
-          echo ${{ env.GITHUB_HEAD_REF_SLUG }}
-          echo ${{ env.GITHUB_BASE_REF_SLUG }}
       - uses: actions/checkout@v2
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
