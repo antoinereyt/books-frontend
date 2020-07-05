@@ -34,7 +34,7 @@ jobs:
       run : |
         sudo apt-get install jq
         LOGIN_DATA="{ \"username\": \"${DOCKER_USERNAME}\", \"password\": \"${DOCKER_PASSWORD}\" }"
-        TOKEN=`curl -s -H "Content-Type: application/json" -X POST -d "$(LOGIN_DATA)" "https://hub.docker.com/v2/users/login/" | jq -r .token`
+        TOKEN=`curl -s -H "Content-Type: application/json" -X POST -d "${LOGIN_DATA}" "https://hub.docker.com/v2/users/login/" | jq -r .token`
         echo $TOKEN
 
         curl "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${IMAGE}/tags/${TAG}/" \
