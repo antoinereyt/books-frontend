@@ -19,6 +19,10 @@ jobs:
         node-version: [12.x]
 
     steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -62,4 +66,5 @@ jobs:
         with:
           message: 'Delete ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event.pull_request.merged
+        if: github.event_name == 'pull_request' && github.event.action == 'closed'
+
