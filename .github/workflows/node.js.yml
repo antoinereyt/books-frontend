@@ -28,9 +28,9 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        ORGANIZATION: "antoinereyt"
+        ORGANIZATION: "antoiner"
         IMAGE: "books-frontend"
-        TAG: "feature-fake-v2-0-10"
+        TAG: "feature-fake-v2-0-11"
       run : |
         sudo apt-get install jq
         LOGIN_DATA="{ \"username\": \"${DOCKER_USERNAME}\", \"password\": \"${DOCKER_PASSWORD}\" }"
