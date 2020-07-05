@@ -19,11 +19,6 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
-
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -51,16 +46,10 @@ jobs:
     needs: publish_docker
     runs-on: ubuntu-latest
     steps:
-      - name: Comment deploy branch url
-        uses: thollander/actions-comment-pull-request@master
+      - uses: actions/checkout@v2
+      - name: deploy to cluster
+        uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          message: 'A preview of this branch will be deployed here http://books.${{ env.GITHUB_HEAD_REF_SLUG }}.areyt.net'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event_name == 'pull_request' && github.event.action == 'opened'
-      - name: Comment delete k8s things
-        uses: thollander/actions-comment-pull-request@master
-        with:
-          message: 'Delete ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event_name == 'pull_request' && github.event.action == 'closed'
-
+          args: kubectl rollout restart deploy/books-frontend
