@@ -32,9 +32,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: JoseThen/comment-pr@v1
-        with:
-          comment: 'This PR is the bees knees!'
       - uses: rlespinasse/github-slug-action@master
       - name: Print slug variables
         run: |
