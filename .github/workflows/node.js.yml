@@ -32,17 +32,17 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@master
-        with:
-          message: 'Example of message !'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: rlespinasse/github-slug-action@master
       - name: Print slug variables
         run: |
           echo ${{ env.GITHUB_REF_SLUG }}
           echo ${{ env.GITHUB_HEAD_REF_SLUG }}
           echo ${{ env.GITHUB_BASE_REF_SLUG }}
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@master
+        with:
+          message: 'A preview of this branch will be deployed here http://books.${{ env.GITHUB_HEAD_REF_SLUG }}.areyt.net'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v2
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
