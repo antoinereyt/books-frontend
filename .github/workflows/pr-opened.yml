@@ -18,3 +18,17 @@ jobs:
       with:
         message: 'Create ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create k8s namespace
+      uses: wahyd4/kubectl-helm-action@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: kubectl create namespace ${{ env.GITHUB_HEAD_REF_SLUG }}
+
+    - name: Install helm package
+      uses: wahyd4/kubectl-helm-action@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: helm install books-frontend -n ${{ env.GITHUB_HEAD_REF_SLUG }} ./books-frontend
