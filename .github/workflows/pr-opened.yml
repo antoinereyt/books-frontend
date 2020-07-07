@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Create Review App
     steps:
+    - uses: rlespinasse/github-slug-action@master
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}

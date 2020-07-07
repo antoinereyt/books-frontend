@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Delete Review App
     steps:
+    - uses: rlespinasse/github-slug-action@master
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -19,7 +20,6 @@ jobs:
         message: 'Delete ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     # Delete Docker tag
-    - uses: rlespinasse/github-slug-action@master
     - shell: bash
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
