@@ -53,4 +53,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: helm upgrade books-frontend ./books-frontend -n ${{ env.GITHUB_HEAD_REF_SLUG }} --set Gitsha=${{ GITHUB_SHA }}
+          args: helm upgrade books-frontend ./books-frontend -n ${{ env.GITHUB_HEAD_REF_SLUG }} --set Gitsha=${{ env.GITHUB_SHA }}
