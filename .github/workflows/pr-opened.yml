@@ -7,9 +7,9 @@ on:
 jobs:
   delete-review-app:
     runs-on: ubuntu-latest
-    - uses: actions/checkout@v2
     name: Create Review App
     steps:
+    - uses: actions/checkout@v2
     - uses: rlespinasse/github-slug-action@master
     - name: Dump GitHub context
       env:
