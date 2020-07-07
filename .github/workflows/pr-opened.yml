@@ -7,6 +7,7 @@ on:
 jobs:
   delete-review-app:
     runs-on: ubuntu-latest
+    - uses: actions/checkout@v2
     name: Create Review App
     steps:
     - uses: rlespinasse/github-slug-action@master
