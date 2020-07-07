@@ -38,7 +38,7 @@ Common labels
 helm.sh/chart: {{ include "books-frontend.chart" . }}
 {{ include "books-frontend.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/version: {{ .Values.Gitsha | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
