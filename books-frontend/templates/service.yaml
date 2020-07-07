@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # name: {{ include "books-frontend.fullname" . }}
+  name: {{ .Chart.Name }}
+  labels:
+    {{- include "books-frontend.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "books-frontend.selectorLabels" . | nindent 4 }}
