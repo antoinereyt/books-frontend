@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Delete Review App
     steps:
+    - uses: actions/checkout@v2
     - uses: rlespinasse/github-slug-action@master
     - name: Dump GitHub context
       env:
