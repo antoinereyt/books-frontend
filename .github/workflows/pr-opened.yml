@@ -29,4 +29,4 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: helm install books-frontend -n ${{ env.GITHUB_HEAD_REF_SLUG }} --set Gitsha=${{ env.GITHUB_SHA }} ./books-frontend
+        args: helm install books-frontend -n ${{ env.GITHUB_HEAD_REF_SLUG }} --set Gitsha=${{ GITHUB_SHA }} ./books-frontend
