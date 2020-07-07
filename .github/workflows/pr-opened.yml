@@ -18,7 +18,7 @@ jobs:
     - name: Comment
       uses: thollander/actions-comment-pull-request@master
       with:
-        message: 'Create ${{ env.GITHUB_HEAD_REF_SLUG }} k8s things'
+        message: 'Deploying preview on ${{ env.GITHUB_HEAD_REF_SLUG }}.books.areyt.net'
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create k8s namespace
