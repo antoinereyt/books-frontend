@@ -10,7 +10,7 @@ jobs:
     name: Delete Review App
     steps:
     - uses: actions/checkout@v2
-    - uses: rlespinasse/github-slug-action@master
+    - uses: rlespinasse/github-slug-action@1.1.1
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
